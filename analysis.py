@@ -217,7 +217,7 @@ def process_data(df, col, dates, title, savename, t_total=10, t_last=2):
         
     # Make GIF
     files = os.listdir(path)   
-    t_frame = t_total-t_last/(len(files)+1)
+    t_frame = (t_total-t_last)/(len(files)+1)
     
     images = []
     for file in files:
