@@ -45,14 +45,21 @@ df['Country/Region'] = df['Country/Region'].str.strip()
 df['Country/Region'] = df['Country/Region'].replace('Bosnia and Herzegovina', "Bosnia and Herz.")
 df['Country/Region'] = df['Country/Region'].replace('Czech Republic', "Czechia")
 df['Country/Region'] = df['Country/Region'].replace('Dominican Republic', "Dominican Rep.")
+df['Country/Region'] = df['Country/Region'].replace('Hong Kong SAR', "Hong Kong")
+df['Country/Region'] = df['Country/Region'].replace('Iran (Islamic Republic of)', "Iran")
 df['Country/Region'] = df['Country/Region'].replace('Ivory Coast', "Côte d'Ivoire")
-df['Country/Region'] = df['Country/Region'].replace('Republic of Ireland', 'Ireland')
+df['Country/Region'] = df['Country/Region'].replace('Macao SAR', "Macau")
 df['Country/Region'] = df['Country/Region'].replace('Mainland China', 'China')
 df['Country/Region'] = df['Country/Region'].replace('North Macedonia', 'Macedonia')
 df['Country/Region'] = df['Country/Region'].replace('North Ireland', 'N. Ireland')
+df['Country/Region'] = df['Country/Region'].replace('Republic of Ireland', 'Ireland')
+df['Country/Region'] = df['Country/Region'].replace('Republic of Korea', 'South Korea')
+df['Country/Region'] = df['Country/Region'].replace('Republic of Moldova', 'Moldova')
+df['Country/Region'] = df['Country/Region'].replace('Russian Federation', 'Russia')
 df['Country/Region'] = df['Country/Region'].replace('UK', 'United Kingdom')
 df['Country/Region'] = df['Country/Region'].replace('US', 'United States of America')
 df['Country/Region'] = df['Country/Region'].replace('United States', 'United States of America')
+df['Country/Region'] = df['Country/Region'].replace('Viet Nam', 'Vietnam')
 
 df = df.drop_duplicates()
 
@@ -95,9 +102,9 @@ def plot_world(land_color, water_color, alpha):
     return fig, ax
             
 
-def plot_fill(ax, country, color, df_geo_110, alpha=1, zorder=1):
+def plot_fill(ax, country, color, df_geo_110, alpha=1, zorder=1, verbosity=0):
     loc_df = df_geo_110[df_geo_110['NAME']==country]
-    if len(loc_df)==0:
+    if len(loc_df)==0 and verbosity==1:
         print(f'Country name {country} not found')
         return
     
@@ -136,7 +143,7 @@ def process_data(df, col, dates, title, savename, t_total=10, t_last=2):
     else:
         df_history = pd.DataFrame()
     
-    print(f'Processing {col}')
+    print(f'\nProcessing {col}')
     for i, date in enumerate(dates):
         output_path = path+date.strftime('img%Y%m%d.png')
         
@@ -200,7 +207,7 @@ def process_data(df, col, dates, title, savename, t_total=10, t_last=2):
                           alpha=1)
                 plot_fill(ax, country, 
                           color='r', df_geo_110=df_geo_110, 
-                          alpha=alpha)
+                          alpha=alpha, verbosity=1)
           
         
         # Sort and save history
