@@ -133,6 +133,8 @@ def process_data(df, col, dates, title, savename, t_total=10, t_last=2):
     path = f'output/{savename}/'
     
     # Create output dir if it does not exist
+    if not os.path.exists('output'):
+        os.mkdir('output')
     if not os.path.exists(path):
         os.mkdir(path)
     
@@ -242,15 +244,15 @@ def process_data(df, col, dates, title, savename, t_total=10, t_last=2):
     
 
 # Main code -------------------------------------------------------------------
-# Add column sick
-df['Sick'] = df['Confirmed']-df['Deaths']-df['Recovered']
+# Add column active cases
+df['Active'] = df['Confirmed']-df['Deaths']-df['Recovered']
 
 # Scale df by max infected
 df['Date'] = df['Last Update'].dt.date
 
 # Filter data to have max per day
 df_maxday = df.groupby(by=['Country/Region', 'Province/State', 'Date']).max()
-df_maxday = df_maxday[['Confirmed', 'Deaths', 'Sick']]
+df_maxday = df_maxday[['Confirmed', 'Deaths', 'Active']]
 df_maxday.reset_index(inplace=True)
        
 dates = sorted(df['Date'].unique())
@@ -272,9 +274,9 @@ savename = 'deaths'
 process_data(df, col, dates, title, savename)
 
 
-# Plotting - Sick
-col = 'Sick'
-title = 'Sick'
-savename = 'sick'
+# Plotting - Active cases
+col = 'Active'
+title = 'Active cases'
+savename = 'active'
 
 process_data(df, col, dates, title, savename)
