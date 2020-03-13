@@ -4,7 +4,7 @@
 ## Output
 ![COVID-19: Confirmed cases](/confirmed.gif)
 ![COVID-19: Deaths](/deaths.gif)
-![COVID-19: Sick](/sick.gif)
+![COVID-19: Active cases](/active.gif)
 
 ## Usage
 Run it. It will generate images for every day, skipping the days where there is already data in the df_history.csv file. Delete (parts of) the file to rerun it. 
